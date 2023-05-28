@@ -13,7 +13,7 @@ import {
 async function getData() {
   // Fetch data from your API here.
   const { data, error } = await supabase
-  .from('PLAYER')
+  .from('TEAM')
   .select()
   if (data != null) {return JSON.parse(JSON.stringify(data))}
 }
@@ -23,23 +23,23 @@ async function getData() {
 export default async function Home() {
   const results = await getData()
   return (<Table>
-  <TableCaption>A list of your recent invoices.</TableCaption>
+  <TableCaption>Query results</TableCaption>
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[100px]">id</TableHead>
-      <TableHead>name</TableHead>
-      <TableHead className="text-right">is_active</TableHead>
+      <TableHead className="w-[100px]">Nickname</TableHead>
+      <TableHead>City</TableHead>
+      <TableHead>State</TableHead>
+      <TableHead className="text-right">Abbr</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
     {results.map((result: any) => (
-          <TableRow key={result.ID}>
-          <TableCell className="font-medium">{result.ID}</TableCell>
-          <TableCell>{result.Name}</TableCell>
-          <TableCell className="text-right">{result.Is_Active}</TableCell>
+          <TableRow key={result.id}>
+          <TableCell className="font-medium">{result.Nickname}</TableCell>
+          <TableCell>{result.City}</TableCell>
+          <TableCell className="text-right">{result.State}</TableCell>
         </TableRow>
     ))}
   </TableBody>
 </Table>)
-
 }
