@@ -13,7 +13,7 @@ import {
 async function getData() {
   // Fetch data from your API here.
   const { data, error } = await supabase
-  .from('TEAM')
+  .from('LINE_SCORE')
   .select()
   if (data != null) {return JSON.parse(JSON.stringify(data))}
 }
@@ -26,20 +26,17 @@ export default async function Home() {
   <TableCaption>Query results</TableCaption>
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[100px]">Nickname</TableHead>
-      <TableHead>City</TableHead>
-      <TableHead>State</TableHead>
-      <TableHead className="text-right">Abbr</TableHead>
+      <TableHead className="w-[100px]">Game ID</TableHead>
+      <TableHead>Home Points</TableHead>
+      <TableHead className="text-right">Away Points</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
     {results.map((result: any) => (
-          <TableRow key={result.id}>
-          <TableCell className="font-medium">{result.Nickname}</TableCell>
-          <TableCell>{result.City}</TableCell>
-          <TableCell>{result.State}</TableCell>
-
-          <TableCell className="text-right">{result.Abbr}</TableCell>
+          <TableRow key={result.GameID}>
+          <TableCell className="font-medium">{result.GameID}</TableCell>
+          <TableCell>{result.Pts_Home}</TableCell>
+          <TableCell className="text-right">{result.Pts_Away}</TableCell>
         </TableRow>
     ))}
   </TableBody>
