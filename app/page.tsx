@@ -37,7 +37,9 @@ export default async function Home() {
           <TableRow key={result.id}>
           <TableCell className="font-medium">{result.Nickname}</TableCell>
           <TableCell>{result.City}</TableCell>
-          <TableCell className="text-right">{result.State}</TableCell>
+          <TableCell>{result.State}</TableCell>
+
+          <TableCell className="text-right">{result.Abbr}</TableCell>
         </TableRow>
     ))}
   </TableBody>
