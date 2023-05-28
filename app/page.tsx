@@ -33,7 +33,7 @@ export default async function Home() {
   </TableHeader>
   <TableBody>
     {results.map((result: any) => (
-          <TableRow>
+          <TableRow key={result.ID}>
           <TableCell className="font-medium">{result.ID}</TableCell>
           <TableCell>{result.Name}</TableCell>
           <TableCell className="text-right">{result.Is_Active}</TableCell>
@@ -42,4 +42,4 @@ export default async function Home() {
   </TableBody>
 </Table>)
 
-}
+}git 
