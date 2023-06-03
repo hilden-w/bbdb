@@ -1,44 +1,36 @@
-import { Key } from 'react'
-import supabase from '../utils/supabase'
+import Link from 'next/link';
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  Calculator,
+  Calendar,
+  CreditCard,
+  Settings,
+  Smile,
+  User,
+} from "lucide-react"
 
-async function getData() {
-  // Fetch data from your API here.
-  const { data, error } = await supabase
-  .from('LINE_SCORE')
-  .select()
-  if (data != null) {return JSON.parse(JSON.stringify(data))}
-}
-
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
 
 
 export default async function Home() {
-  const results = await getData()
-  return (<Table>
-  <TableCaption>Query results</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="w-[100px]">Game ID</TableHead>
-      <TableHead>Home Points</TableHead>
-      <TableHead className="text-right">Away Points</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    {results.map((result: any) => (
-          <TableRow key={result.GameID}>
-          <TableCell className="font-medium">{result.GameID}</TableCell>
-          <TableCell>{result.Pts_Home}</TableCell>
-          <TableCell className="text-right">{result.Pts_Away}</TableCell>
-        </TableRow>
-    ))}
-  </TableBody>
-</Table>)
+    return (<Command>
+    <CommandInput placeholder="Type a command or search..." />
+    <CommandList>
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup heading="Queries">
+        <CommandItem><Link href="/q1">Who made the most points on team y during x game?</Link></CommandItem>
+        <CommandItem>What is (player) 3 point success rate?</CommandItem>
+        <CommandItem>During the game of x vs y, who performed best?</CommandItem>
+        <CommandItem>Wins and losses of team x against team y of all time?</CommandItem>
+      </CommandGroup>
+    </CommandList>
+  </Command>)
 }
