@@ -30,6 +30,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import supabase from "@/utils/supabase"
+import { useRouter } from 'next/navigation';
 
 const languages = [
   { label: "English", value: "en" },
@@ -66,6 +67,8 @@ export default function ComboboxReactHookForm() {
   const [loading, setLoading] = React.useState(false)
   const [teams, setTeams] = React.useState<any[]>([])
   const [games, setGames] = React.useState<any[]>([])
+  const router = useRouter();
+
 
   React.useEffect(() => {
     const loadTeams = async () => {
@@ -85,7 +88,7 @@ export default function ComboboxReactHookForm() {
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
+    router.push(`/q1/display?Nickname=${data.Nickname}&GameID=${data.GameID}`)
   }
     return ( <>{loading?(<div>loading</div>): ( <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -1,3 +1,4 @@
+'use client'
 import supabase from '@/utils/supabase'
 import {
   Table,
@@ -8,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useSearchParams } from 'next/navigation';
 
 async function getData() {
   const { data, error } = await supabase
@@ -17,8 +19,11 @@ async function getData() {
 }
 
 
-
 export default async function Display() {
+  const searchParams = useSearchParams()
+  const Nickname = searchParams.get('Nickname')
+  const GameID = searchParams.get('GameID')
+  console.log("DATA!  ",Nickname, GameID)
   const results = await getData()
   return (<Table>
   <TableCaption>Query results</TableCaption>
@@ -44,12 +49,3 @@ export default async function Display() {
 </Table>)
 }
 
- async function getGames() {
-
-  const { data, error } = await supabase
-  .from('GAME')
-  .select('GameID')
-  if (data != null) {
-    return JSON.parse(JSON.stringify(data))
-  }
-}
