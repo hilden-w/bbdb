@@ -18,7 +18,6 @@ async function getData(team1 : any, team2: any) {
   console.log("team 1",team1)
   console.log("team 2",team2)
   const { data, error } = await supabase.rpc('get_games', {team1: team1, team2: team2})
-  console.log(data, error)
   if (data != null) {return JSON.parse(JSON.stringify(data))}
 }
 

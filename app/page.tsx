@@ -26,6 +26,7 @@ export default async function Home() {
     <CommandList>
       <CommandEmpty>No results found.</CommandEmpty>
       <CommandGroup heading="Queries">
+        <CommandItem><Link href="/findgames">See the GameID of game where team 1 played team 2?</Link></CommandItem>
         <CommandItem><Link href="/q1">Who made the most points on team y during x game?</Link></CommandItem>
         <CommandItem><Link href="/q2">What is (player) 3 point success rate?</Link></CommandItem>
         <CommandItem><Link href="/q3">During the game of x vs y, who performed best?</Link></CommandItem>
