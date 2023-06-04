@@ -32,10 +32,10 @@ import supabase from "@/utils/supabase"
 import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
-  Nickname: z.string({
+  team1: z.string({
     required_error: "Please select a team.",
   }),
-  GameID: z.number({
+  team2: z.string({
     required_error: "Please select a game.",
   }),
 })
@@ -44,25 +44,22 @@ async function getTeams() {
   const {data, error} = await supabase.from("TEAM").select("Nickname")
   if (data) return JSON.parse(JSON.stringify(data))
 }
-async function getGames() {
-  const {data, error} = await supabase.from("GAME").select("GameID").limit(20)
-  if (data) return JSON.parse(JSON.stringify(data))
-}
+
 
 export default function ComboboxReactHookForm() {
   const [open, setOpen] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const [teams, setTeams] = React.useState<any[]>([])
-  const [games, setGames] = React.useState<any[]>([])
+  const [team1s, setTeam1s] = React.useState<any[]>([])
+  const [team2s, setTeam2s] = React.useState<any[]>([])
   const router = useRouter();
 
   React.useEffect(() => {
     const loadTeams = async () => {
       setLoading(true)
-      const teams = await getTeams()
-      const games = await getGames()
-      setGames(games)
-      setTeams(teams)
+      const team1s = await getTeams()
+      const team2s = await getTeams()
+      setTeam1s(team1s)
+      setTeam2s(team2s)
       setLoading(false)
     }
     loadTeams()
@@ -72,13 +69,14 @@ export default function ComboboxReactHookForm() {
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    router.push(`/q1/display?Nickname=${data.Nickname}&GameID=${data.GameID}`)
+    console.log(data)
+    router.push(`/findgames/display?team1=${data.team1}&team2=${data.team2}`)
   }
     return ( <>{loading?(<div>loading</div>): ( <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       { <FormField
         control={form.control}
-        name="Nickname"
+        name="team1"
         render={({ field }) => (
           <FormItem className="flex flex-col">
             <FormLabel>Team</FormLabel>
@@ -92,7 +90,7 @@ export default function ComboboxReactHookForm() {
           className="w-[200px] justify-between"
         >
           {field.value
-            ? teams.find((team)=> team.Nickname.toLowerCase() === field.value)?.Nickname
+            ? team1s.find((team1)=> team1.Nickname.toLowerCase() === field.value)?.Nickname
             : "Select team..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -103,22 +101,22 @@ export default function ComboboxReactHookForm() {
           <CommandInput placeholder="Search team..." />
           <CommandEmpty>No team found.</CommandEmpty>
           <CommandGroup>
-            {teams.map((team : {Nickname:string}) => (
+            {team1s.map((team1 : {Nickname:string}) => (
               <CommandItem
-                key={team.Nickname}
-                value={team.Nickname}
+                key={team1.Nickname}
+                value={team1.Nickname}
                 onSelect={(value) => {
-                  form.setValue("Nickname", value)
+                  form.setValue("team1", value)
                   console.log(value)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    field.value === team.Nickname ? "opacity-100" : "opacity-0"
+                    field.value === team1.Nickname ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {team.Nickname}
+                {team1.Nickname}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -126,18 +124,18 @@ export default function ComboboxReactHookForm() {
       </PopoverContent>
     </Popover>
             <FormDescription>
-              select the team for the query
+              select the first team for the query
             </FormDescription>
             <FormMessage />
           </FormItem>
         )}
       />}
-       <FormField
+       { <FormField
         control={form.control}
-        name="GameID"
+        name="team2"
         render={({ field }) => (
           <FormItem className="flex flex-col">
-            <FormLabel>Game</FormLabel>
+            <FormLabel>Team</FormLabel>
             <Popover>
       <PopoverTrigger asChild>
       <FormControl>
@@ -148,33 +146,33 @@ export default function ComboboxReactHookForm() {
           className="w-[200px] justify-between"
         >
           {field.value
-            ? games.find((game)=> game.GameID === Number(field.value))?.GameID
-            : "Select game..."}
+            ? team2s.find((team2)=> team2.Nickname.toLowerCase() === field.value)?.Nickname
+            : "Select team..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
         </FormControl>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search game..." />
-          <CommandEmpty>No game found.</CommandEmpty>
+          <CommandInput placeholder="Search team..." />
+          <CommandEmpty>No team found.</CommandEmpty>
           <CommandGroup>
-            {games.map((game : {GameID:number}) => (
+            {team2s.map((team2 : {Nickname:string}) => (
               <CommandItem
-                key={game.GameID}
-                value={game.GameID.toString()}
+                key={team2.Nickname}
+                value={team2.Nickname}
                 onSelect={(value) => {
-                  form.setValue("GameID", Number(value))
+                  form.setValue("team2", value)
                   console.log(value)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    field.value === game.GameID ? "opacity-100" : "opacity-0"
+                    field.value === team2.Nickname ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {game.GameID}
+                {team2.Nickname}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -182,12 +180,12 @@ export default function ComboboxReactHookForm() {
       </PopoverContent>
     </Popover>
             <FormDescription>
-              select the game for the query
+              select the second team for the query
             </FormDescription>
             <FormMessage />
           </FormItem>
         )}
-      />
+      />}
       <Button type="submit">Submit</Button>
     </form>
   </Form>)}</>)

@@ -27,9 +27,9 @@ export default async function Home() {
       <CommandEmpty>No results found.</CommandEmpty>
       <CommandGroup heading="Queries">
         <CommandItem><Link href="/q1">Who made the most points on team y during x game?</Link></CommandItem>
-        <CommandItem>What is (player) 3 point success rate?</CommandItem>
-        <CommandItem>During the game of x vs y, who performed best?</CommandItem>
-        <CommandItem>Wins and losses of team x against team y of all time?</CommandItem>
+        <CommandItem><Link href="/q2">What is (player) 3 point success rate?</Link></CommandItem>
+        <CommandItem><Link href="/q3">During the game of x vs y, who performed best?</Link></CommandItem>
+        <CommandItem><Link href="/q4">Wins and losses of team x against team y of all time?</Link></CommandItem>
       </CommandGroup>
     </CommandList>
   </Command>)
