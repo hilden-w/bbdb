@@ -24,6 +24,7 @@ async function getData(team1 : any, team2: any) {
 
 export default function Display() {
   const [loading, setLoading] = React.useState(false)
+  const [isGood, setGood] = React.useState(false)
   const [results, setResults] = React.useState<any[]>([])
   const searchParams = useSearchParams()
   const team1 = searchParams.get('team1')
@@ -34,25 +35,34 @@ export default function Display() {
       setLoading(true)
       const results = await getData(team1, team2)
       console.log("results",results)
+      setGood(results != null)
       setResults(results)
       setLoading(false)
     }
     loadResults()
   },[])
-  return (<>{loading ? <div>loading</div> : (<Table>
-    <TableCaption>Query results</TableCaption>
-    <TableHeader>
-      <TableRow>
-        <TableHead className="w-[100px]">GameID</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {results.map((result: any) => (
-            <TableRow key={result.GameID}>
-            <TableCell className="font-medium">{result.gameid}</TableCell>
-          </TableRow>
-      ))}
-    </TableBody>
-  </Table>)}</>)
+  return (
+    <>
+      {loading ? (
+        <div>loading</div>
+      ) : isGood ? (
+        <Table>
+          <TableCaption>Query results</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">GameID</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {results.map((result: any) => (
+              <TableRow key={result.GameID}>
+                <TableCell className="font-medium">{result.gameid}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : <div>No results found</div>}
+    </>
+  );
 }
 

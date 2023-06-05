@@ -16,7 +16,7 @@ import * as React from "react"
 async function getData(team1 : any) {
 
   const { data, error } = await supabase
-  .rpc('get_fg_perc', {
+  .rpc('get_threefg_perc', {
     team1
   })
   if (data) return JSON.parse(JSON.stringify(data))
@@ -53,21 +53,22 @@ export default function Display() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Team</TableHead>
-              <TableHead className="text-right">Field goal Percentage</TableHead>
+              <TableHead className="text-right">Free throw Percentage</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {results.map((result: any) => (
               <TableRow key={result.team}>
                 <TableCell className="font-medium">{result.team}</TableCell>
-                <TableCell className="text-right">{result.field_foal_percentage}</TableCell>
+                <TableCell className="text-right">{result.field_throw_percentage}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      ) : <div>No results found</div>}
+      ) : (
+        <div>Could not find data</div>
+      )}
     </>
   );
-
 }
 

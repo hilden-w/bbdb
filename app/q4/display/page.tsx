@@ -12,37 +12,38 @@ import {
 import { useSearchParams } from 'next/navigation';
 import * as React from "react"
 
-
-async function getData(team1 : any) {
+async function getData(gamenum : any) {
 
   const { data, error } = await supabase
-  .rpc('get_fg_perc', {
-    team1
+  .rpc('get_game_score', {
+    gamenum
   })
-  if (data) return JSON.parse(JSON.stringify(data))
+
+  if (data)return data;
 
 }
 
 
 export default function Display() {
   const [loading, setLoading] = React.useState(false)
-  const [isGood, setGood] = React.useState(false)
   const [results, setResults] = React.useState<any[]>([])
+  const [isGood, setGood] = React.useState(false)
   const searchParams = useSearchParams()
-  const team = searchParams.get('team')
-  console.log("DATA!  ",team)
+  const game = searchParams.get('game')
+
   React.useEffect(() => {
     const loadResults = async () => {
       setLoading(true)
-      const results = await getData(team)
-      console.log(results)
+      const results = await getData(game)
+      console.log("results",results)
       setGood(results != null)
       setResults(results)
+
       setLoading(false)
     }
     loadResults()
   },[])
-
+  //TABLE(hteam text, hscore bigint, ateam text, ascore bigint, winner text)
   return (
     <>
       {loading ? (
@@ -52,20 +53,29 @@ export default function Display() {
           <TableCaption>Query results</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Team</TableHead>
-              <TableHead className="text-right">Field goal Percentage</TableHead>
+              <TableHead className="w-[100px]">Winner</TableHead>
+              <TableHead>Home Team</TableHead>
+              <TableHead>Home Team Score</TableHead>
+              <TableHead>Away Team</TableHead>
+              <TableHead className="text-right">Away Team Score</TableHead>
+
             </TableRow>
           </TableHeader>
           <TableBody>
             {results.map((result: any) => (
-              <TableRow key={result.team}>
-                <TableCell className="font-medium">{result.team}</TableCell>
-                <TableCell className="text-right">{result.field_foal_percentage}</TableCell>
+              <TableRow key={result.winner}>
+                <TableCell className="font-medium">{result.winner}</TableCell>
+                <TableCell>{result.hteam}</TableCell>
+                <TableCell>{result.hscore}</TableCell>
+                <TableCell>{result.ateam}</TableCell>
+                <TableCell className="text-right">{result.ascore}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      ) : <div>No results found</div>}
+      ) : (
+        <div>Could not find GameID or no results found</div>
+      )}
     </>
   );
 
