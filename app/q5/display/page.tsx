@@ -59,7 +59,7 @@ export default function Display() {
           <TableBody>
             {results.map((result: any) => (
               <TableRow key={result.Rank}>
-                <TableCell className="font-medium">{result.Rank}</TableCell>
+                <TableCell className="font-medium">{result.rank}</TableCell>
                 <TableCell>{result.team}</TableCell>
                 <TableCell>{result.wins}</TableCell>
                 <TableCell>{result.losses}</TableCell>
@@ -69,7 +69,7 @@ export default function Display() {
           </TableBody>
         </Table>
       ) : (
-        <div>Could not find GameID</div>
+        <div>No results found</div>
       )}
     </>
   );

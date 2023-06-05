@@ -65,10 +65,10 @@ export default function Display() {
             {results.map((result: any) => (
               <TableRow key={result.winner}>
                 <TableCell className="font-medium">{result.winner}</TableCell>
-                <TableCell>{result.hteam}</TableCell>
-                <TableCell>{result.hscore}</TableCell>
-                <TableCell>{result.ateam}</TableCell>
-                <TableCell className="text-right">{result.ascore}</TableCell>
+                <TableCell>{result.home_team}</TableCell>
+                <TableCell>{result.home_score}</TableCell>
+                <TableCell>{result.away_team}</TableCell>
+                <TableCell className="text-right">{result.away_score}</TableCell>
               </TableRow>
             ))}
           </TableBody>

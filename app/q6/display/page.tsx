@@ -15,7 +15,7 @@ async function getData() {
 
 
   const { data, error } = await supabase
-  .rpc('get_rank_league')
+  .rpc('get_rank_conf_west')
   if (data) return JSON.parse(JSON.stringify(data))
 
 
@@ -38,8 +38,8 @@ export default function Display() {
     }
     loadResults()
   },[])
-  //TABLE(team text, rank bigint, wins bigint, losses bigint, win_ratio numeric)
-  return (
+  // TABLE(team text, rank bigint, wins bigint, losses bigint)
+    return (
     <>
       {loading ? (
         <div>loading</div>
@@ -51,25 +51,23 @@ export default function Display() {
               <TableHead className="w-[100px]">Rank</TableHead>
               <TableHead>Team</TableHead>
               <TableHead>Wins</TableHead>
-              <TableHead>Losses</TableHead>
-              <TableHead className="text-right">Win Ratio</TableHead>
+              <TableHead className="text-right">Losses</TableHead>
 
             </TableRow>
           </TableHeader>
           <TableBody>
             {results.map((result: any) => (
               <TableRow key={result.Rank}>
-                <TableCell className="font-medium">{result.Rank}</TableCell>
+                <TableCell className="font-medium">{result.rank}</TableCell>
                 <TableCell>{result.team}</TableCell>
                 <TableCell>{result.wins}</TableCell>
-                <TableCell>{result.losses}</TableCell>
-                <TableCell className="text-right">{result.win_ratio}</TableCell>
+                <TableCell  className="text-right">{result.losses}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       ) : (
-        <div>Could not find GameID</div>
+        <div>Could not find GameID or No results found</div>
       )}
     </>
   );

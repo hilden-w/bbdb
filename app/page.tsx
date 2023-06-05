@@ -31,9 +31,8 @@ export default async function Home() {
         <CommandItem><Link href="/q3">What is the free throw percentage for team x?</Link></CommandItem>
         <CommandItem><Link href="/q4">What is the game score and winner for game x?</Link></CommandItem>
         <CommandItem><Link href="/q5/display">What are the ranks of the league?</Link></CommandItem>
-        <CommandItem><Link href="/q6/display">What are the ranks in the Northwest conference</Link></CommandItem>
+        <CommandItem><Link href="/q6/display">What are the ranks in the West conference</Link></CommandItem>
         <CommandItem><Link href="/q7">What is the 3 point field goal percentage for team x?</Link></CommandItem>
-        <CommandItem><Link href="/q8">What are the ranks in the Northwest conference</Link></CommandItem>
       </CommandGroup>
     </CommandList>
   </Command>)

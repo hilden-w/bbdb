@@ -19,7 +19,7 @@ import {
 import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
-  game: z.number({
+  game: z.string({
     required_error: "Please input a game id",
   }),
 })
@@ -55,6 +55,6 @@ export default function ComboboxReactHookForm() {
         />
       <Button type="submit">Submit</Button>
     </form>
-  </Form>)</>)
+  </Form></>)
 }
 

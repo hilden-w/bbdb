@@ -14,7 +14,7 @@ import * as React from "react"
 
 
 async function getData(team1 : any) {
-
+  team1 = team1.charAt(0).toUpperCase() + team1.slice(1);
   const { data, error } = await supabase
   .rpc('get_ft_perc', {
     team1
@@ -62,7 +62,7 @@ export default function Display() {
                 {results.map((result: any) => (
                   <TableRow key={result.team}>
                     <TableCell className="font-medium">{result.team}</TableCell>
-                    <TableCell className="text-right">{result.field_throw_percentage}</TableCell>
+                    <TableCell className="text-right">{result.freethrow_percentage}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
