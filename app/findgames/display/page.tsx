@@ -21,6 +21,7 @@ async function getData(team1 : any, team2: any) {
   if (data != null) {return JSON.parse(JSON.stringify(data))}
 }
 
+//TABLE(team text, vs_team text, gameid bigint, date timestamp with time zone)
 
 export default function Display() {
   const [loading, setLoading] = React.useState(false)
@@ -51,12 +52,21 @@ export default function Display() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">GameID</TableHead>
+              <TableHead>Team 1</TableHead>
+              <TableHead>Team 2</TableHead>
+
+              <TableHead className="text-right">Date</TableHead>
+
             </TableRow>
           </TableHeader>
           <TableBody>
             {results.map((result: any) => (
               <TableRow key={result.GameID}>
                 <TableCell className="font-medium">{result.gameid}</TableCell>
+                <TableCell>{result.team}</TableCell>
+                <TableCell>{result.vs_team}</TableCell>
+                <TableCell className="text-right">{result.date}</TableCell>
+
               </TableRow>
             ))}
           </TableBody>
