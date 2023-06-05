@@ -37,12 +37,11 @@ export default function Display() {
       const results = await getData(team1, team2)
       console.log("results",results)
       setGood(results != null)
-      if (isGood) {
-        results.forEach((result: any) => {
-          let temp = result.date.toString()
-          result.date = temp.split('T')[0]
-        })
-      }
+      results.forEach((result: any) => {
+        let temp = result.date.toString()
+        result.date = temp.split('T')[0]
+        console.log(result.date)
+      })
       setResults(results)
       setLoading(false)
     }
